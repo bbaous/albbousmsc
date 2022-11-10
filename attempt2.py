@@ -23,11 +23,6 @@ my_parser.add_argument('file',
 
 # Execute the parse_args() method
 args = my_parser.parse_args()
-
-if not os.path.exists('args.file'):
-    print('The file  does not exist')
-    sys.exit()
-    
 input_file = open(args.file, 'r')
 
 # reading given tsv file
