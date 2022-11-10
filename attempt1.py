@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Nov  6 20:10:16 2022
-
-@author: alexandrabaousi
 """
 
 # Python program to convert .tsv file to .csv file
