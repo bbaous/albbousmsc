@@ -1,33 +1,57 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Nov  6 20:10:16 2022
-"""
-
 # Python program to convert .tsv file to .csv file
-# importing re library
+# Importing necessary libraries
 import csv
 import numpy as np
 import pandas as pd
 import re
 import argparse
-import os
-import sys
+import json
 
-my_parser = argparse.ArgumentParser(description='File to be loaded:')
-# Add the arguments
-my_parser.add_argument('file',
-                       metavar='file',
-                       type=str,
-                       help='the file to be loaded')
 
-# Execute the parse_args() method
-args = my_parser.parse_args()
-input_file = open(args.file, 'r')
+def readInputArgument():
+
+    my_parser = argparse.ArgumentParser(description='File to be loaded:')
+
+    my_parser.add_argument('--input',
+                           '-i',
+                           metavar='input',
+                           type=str,
+                           help='the file to be loaded')
+
+    my_parser.add_argument('--output',
+                           '-o',
+                           metavar='output',
+                           help='Output file .',
+                           )
+    # Execute the parse_args() method
+    args = my_parser.parse_args()
+
+    return args
+
+
+input_file = open(readInputArgument().input, 'r')
+output_file = open(readInputArgument().output, 'w')
+#input_file = open(readInputArgument().file1, 'r')
+
+
+def readInputArguments():
+    parser = argparse.ArgumentParser()
+    # note type arg, used to load json string
+    parser.add_argument('-l', '--list', type=json.loads,
+                        help='the files to be loaded')
+    args = parser.parse_args()
+    print(args.list)
+    # print(args.list[0])
+    return args.list[0]
+
+
+#input_file = open(readInputArguments(), 'r')
 
 # reading given tsv file
 with input_file as myfile:
-    with open("file_pairA_1.csv", 'w') as csv_file:
+    with output_file as csv_file:
         for line in myfile:
 
             # Replace every tab with comma
