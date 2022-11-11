@@ -7,12 +7,12 @@ import numpy as np
 import pandas as pd
 import re
 import argparse
-import os
-import gc
-import io
 
 
-
+'''
+Parse input arguments
+usage : ./attempt3.py  --file1 file_pairA_1.tsv --output1 file_pairA_1.csv --file2 file_pairA_2.tsv --output2 file_pairA_2.csv
+'''
 def readInputArgument():
 
     my_parser = argparse.ArgumentParser(description='File to be loaded:')
@@ -46,8 +46,6 @@ def readInputArgument():
     return args
 
 # Convert a tsv to csv file
-
-
 def writeToFile(InputFile, OutputFile):
     # reading given tsv file
     with InputFile as tsv_file:
@@ -81,14 +79,10 @@ except IOError:
     print("File Created")
 
 # Add two dataframe columns
-
-
 def addColumns(FirstColumn, SecondColumn):
     return FirstColumn+SecondColumn
 
 # Divide two df -replacing 0 with one to remove NaN
-
-
 def findMean(FirstColumn, SecondColumn):
     SecondColumn.replace(to_replace=0, value=1,  inplace=True)
     return FirstColumn/SecondColumn
@@ -113,6 +107,6 @@ result3 = addColumns(csvfile1['Coverage_Depth'], csvfile2['Coverage_Depth'])
 # Find the mean between alt_allele frequencies in csv1 and csv2
 result4 = findMean(result2, result3)
 
-#Writing the results to a csv file 
+# Writing the results to a csv file
 with open('output.csv', 'w') as f:
     pd.concat([result, result2, result3, result4], axis=1).to_csv(f)
