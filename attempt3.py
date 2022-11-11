@@ -11,8 +11,6 @@ import os
 import gc
 import io
 
-# Parse input arguments
-# usage : ./attempt3.py  --file1 file_pairA_1.tsv --output1 file_pairA_1.csv --file2 file_pairA_2.tsv --output2 file_pairA_2.csv
 
 
 def readInputArgument():
