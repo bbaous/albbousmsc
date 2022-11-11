@@ -115,5 +115,6 @@ result3 = addColumns(csvfile1['Coverage_Depth'], csvfile2['Coverage_Depth'])
 # Find the mean between alt_allele frequencies in csv1 and csv2
 result4 = findMean(result2, result3)
 
+#Writing the results to a csv file 
 with open('output.csv', 'w') as f:
     pd.concat([result, result2, result3, result4], axis=1).to_csv(f)
