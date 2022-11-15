@@ -1,4 +1,4 @@
-,Scaffold,Position,Ref_Allele_Count,Alt_Allele_Count,Coverage_Depth,0
+,Scaffold,Position,Ref_Allele_Count,Alt_Allele_Count,Coverage_Depth,Alt_Allele_Frequency
 0,1,11,14,115,129,0.8914728682170543
 1,1,16,30,185,215,0.8604651162790697
 2,2,9,88,119,207,0.5748792270531401
