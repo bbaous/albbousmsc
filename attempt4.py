@@ -7,15 +7,12 @@
 import pandas as pd
 import re
 import argparse
-import numpy as np
 
 
 '''
 Parse input arguments
-usage : ./attempt3.py  --file1 file_pairA_1.tsv --output1 file_pairA_1.csv --file2 file_pairA_2.tsv --output2 file_pairA_2.csv
+usage : ./attempt4.py  --file1 file_pairA_1.tsv --output1 file_pairA_1.csv --file2 file_pairA_2.tsv --output2 file_pairA_2.csv
 '''
-
-#reads input from command line -- 
 def readInputArgument():
 
     my_parser = argparse.ArgumentParser(description='File to be loaded:')
@@ -87,8 +84,8 @@ def addColumns(FirstColumn, SecondColumn):
 
 # Divide two df -replacing 0 on the second df with 1 to remove NaN
 def findMean(FirstColumn, SecondColumn):
-    #SecondColumn.replace(to_replace=0, value=1,  inplace=True)
-    return FirstColumn.divide(SecondColumn).fillna(0)
+    SecondColumn.replace(to_replace=0, value=1,  inplace=True)
+    return FirstColumn/SecondColumn
 
 
 # Convert input input tsv file to csv
@@ -98,10 +95,6 @@ writeToFile(InputFile=input_file2, OutputFile=output_file2)
 #Load the output files
 csvfile1 = pd.read_csv(readInputArgument().output1)
 csvfile2 = pd.read_csv(readInputArgument().output2)
-
-#print untouched columns into output
-result0 = csvfile1[["Scaffold"]].copy()
-result01 = csvfile1[["Position"]].copy()
 
 # Add column 3 in csv 1 to column 3 in second csv (add ref_allele_counts)
 result1 = addColumns(csvfile1['Ref_Allele_Count'], csvfile2['Ref_Allele_Count'])
@@ -115,9 +108,7 @@ result3 = addColumns(csvfile1['Coverage_Depth'], csvfile2['Coverage_Depth'])
 
 # Find the mean between alt_allele frequencies in csv1 and csv2
 result4 = findMean(result2, result3)
-#result4.replace(to_replace='', value=0, inplace=True)
-
 
 # Writing the results to a csv file
 with open('output.csv', 'w') as f:
-    pd.concat([result0,result01, result1, result2, result3, result4], axis=1).to_csv(f)
+    pd.concat([result1, result2, result3, result4], axis=1).to_csv(f)
