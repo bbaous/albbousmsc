@@ -9,15 +9,11 @@ import re
 import argparse
 import numpy as np
 
-
 '''
 Parse input arguments
-usage : ./attempt3.py  --file1 file_pairA_1.tsv --output1 file_pairA_1.csv --file2 file_pairA_2.tsv --output2 file_pairA_2.csv
+usage : ./attempt5.py  --file1 file_pairA_1.tsv --file2 file_pairA_2.tsv
 '''
-
 # reads input from command line --
-
-
 def readInputArgument():
 
     my_parser = argparse.ArgumentParser(description='File to be loaded:')
@@ -34,25 +30,11 @@ def readInputArgument():
                            type=str,
                            help='the file2 to be loaded')
 
-    my_parser.add_argument('--output1',
-                           '-o1',
-                           metavar='output1',
-                           help='Output1 file to write ',
-                           )
-
-    my_parser.add_argument('--output2',
-                           '-o2',
-                           metavar='output2',
-                           help='Output2 file to write ',
-                           )
-
     # Execute the parse_args() method
     args = my_parser.parse_args()
     return args
 
 # Convert a tsv to csv file
-
-
 def writeToFile(InputFile, OutputFile):
     # reading given tsv file
     with InputFile as tsv_file:
@@ -70,45 +52,43 @@ def writeToFile(InputFile, OutputFile):
 input_file1 = open(readInputArgument().file1, 'r')
 input_file2 = open(readInputArgument().file2, 'r')
 
+''' Creating the filenames for the output csv files
+    (same filename as the input tsv files with a csv extention )
+'''
+output1 = input_file1.name.partition('.')[0]+".csv"
+output2 = input_file2.name.partition('.')[0]+".csv"
+
 # Trying to open csv files and if they do not exist create them.
 try:
-    output_file1 = open(readInputArgument().output1, 'w')
+    output_file1 = open(output1, 'w')
     print("File Exists")
 except IOError:
-    output_file1 = open(readInputArgument().output1, 'w')
+    output_file1 = open(output1, 'w')
     print("File Created")
 
 try:
-    output_file2 = open(readInputArgument().output2, 'w')
+    output_file2 = open(output2, 'w')
     print("File Exists")
 except IOError:
-    output_file2 = open(readInputArgument().output2, 'w')
+    output_file2 = open(output2, 'w')
     print("File Created")
 
 # Add two dataframe columns
-
-
 def addColumns(FirstColumn, SecondColumn):
     return FirstColumn+SecondColumn
 
 # Divide two df -replacing 0 on the second df with 1 to remove NaN
-
-
 def findMean(FirstColumn, SecondColumn):
     #SecondColumn.replace(to_replace=0, value=1,  inplace=True)
     return FirstColumn.divide(SecondColumn).fillna(0)
 
-
 # Convert input input tsv file to csv
-
-print (input_file1.name.partition('.')[0]+".csv")
 writeToFile(InputFile=input_file1, OutputFile=output_file1)
 writeToFile(InputFile=input_file2, OutputFile=output_file2)
 
 # Load the output files
-
-csvfile1 = pd.read_csv(readInputArgument().output1)
-csvfile2 = pd.read_csv(readInputArgument().output2)
+csvfile1 = pd.read_csv(output1)
+csvfile2 = pd.read_csv(output2)
 
 # print untouched columns into output
 result00 = csvfile1[["Scaffold"]].copy()
