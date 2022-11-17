@@ -79,7 +79,6 @@ def addColumns(FirstColumn, SecondColumn):
 
 # Divide two df -replacing 0 on the second df with 1 to remove NaN
 def findMean(FirstColumn, SecondColumn):
-    #SecondColumn.replace(to_replace=0, value=1,  inplace=True)
     return FirstColumn.divide(SecondColumn).fillna(0)
 
 # Convert input input tsv file to csv
