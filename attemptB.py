@@ -36,6 +36,11 @@ def readInputArgument():
     args = my_parser.parse_args()
     return args
 
+# Add two dataframe columns
+def addColumns(FirstColumn, SecondColumn):
+    return FirstColumn+SecondColumn.fillna(0) 
+
+
 # Convert a tsv to csv file
 def writeToFile(InputFile, OutputFile):
     # reading given tsv file
@@ -136,8 +141,8 @@ with open('output2c.csv', 'w') as f:
                    how='outer').to_csv(f)
 
 # this is for outputc -Skiping last line 
-csvfile4 = pd.read_csv("output2c.csv",skipfooter=1, engine='python')
-
+#csvfile4 = pd.read_csv("output2c.csv",skipfooter=2, engine='python')
+csvfile4 = pd.read_csv("output2c.csv")
 result00 = csvfile4[["Scaffold"]].copy()
 result01 = csvfile4[["Position"]].copy()
 
