@@ -116,6 +116,9 @@ result2 = addColumns(csvfile3['Alt_Allele_Count_x'],
 result3 = addColumns(csvfile3['Coverage_Depth_x'], 
                      csvfile3['Coverage_Depth_y'])
 
+result1.name="Ref_Allele_Count"
+result2.name="Alt_Allele_Count"
+result3.name="Coverage_Depth"
 result4 = findMean(result2, result3)
 result4.name = result2.name
 
@@ -132,8 +135,8 @@ with open('output2c.csv', 'w') as f:
                    on=['Position', 'Scaffold'], 
                    how='outer').to_csv(f)
 
-# this is for outputc 
-csvfile4 = pd.read_csv("output2c.csv")
+# this is for outputc -Skiping last line 
+csvfile4 = pd.read_csv("output2c.csv",skipfooter=1, engine='python')
 
 result00 = csvfile4[["Scaffold"]].copy()
 result01 = csvfile4[["Position"]].copy()
@@ -149,6 +152,12 @@ result3 = addColumns(csvfile4['Coverage_Depth_x'],
 
 result4 = findMean(result2, result3)
 
+result1.name="Ref_Allele_Count"
+result2.name="Alt_Allele_Count"
+result3.name="Coverage_Depth"
+result4.name="Alt_Allele_Frequency"
+
+
 # Writing the results to a new csv file
 with open('output2d.csv', 'w') as f:
     pd.concat([result00, result01, result1, result2,
@@ -163,5 +172,3 @@ data_import = pd.read_csv('output2d.csv',
                           names = ['Scaffold', 'Position', 
                                    'Ref_Allele_Count', 'Alt_Allele_Count',
                                    'Coverage_Depth', 'Alt_Allele_Frequency'])
-
-
